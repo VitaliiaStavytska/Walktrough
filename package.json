@@ -1,0 +1,14 @@
+{
+    "name": "ui5.walkthrough",
+    "version": "1.0.0",
+    "description": "The UI5 walkthrough application",
+    "scripts": {
+        "start": "ui5 serve -o index.html",
+        "build": "ui5 build --all --clean-dest"
+    },
+    "devDependencies": {
+        "@sap/ux-ui5-tooling": "^1.13.3",
+        "@ui5/cli": "^3.9.2",
+        "ui5-middleware-simpleproxy": "^3"
+    }
+}

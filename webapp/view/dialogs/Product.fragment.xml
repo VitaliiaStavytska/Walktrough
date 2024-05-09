@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog icon="sap-icon://product" 
+        title="Something to read"
+        state="Information">
+        <VBox class="sapUiSmallMargin">
+            <f:SimpleForm
+                editable="false"
+                layout="ResponsiveGridLayout"
+                adjustLabelSpan="false"
+                singleContainerFullSize="true"
+                labelSpanS="4"
+                emptySpanS="0"
+                >
+                <f:content>
+                    <Text="scritto qualcosa"/>
+                </f:content>
+            </f:SimpleForm>
+        </VBox>
+
+        <Toolbar style="Clear">
+            <ToolbarSpacer />
+            <Button text="{i18n>closeProductDetails}" press="onCloseProductDetails" />
+        </Toolbar>
+    </Dialog>
+</core:FragmentDefinition>

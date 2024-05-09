@@ -1,0 +1,169 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    controllerName="ui5.walkthrough.controller.Homepage"
+>
+    <Page
+        id="invoices"
+        title="{i18n>homePageTitle}"
+        titleAlignment="Center"
+    >
+        <Toolbar
+            design="Info"
+            height="80px"
+        >
+            <Title
+                titleStyle="H3"
+                text="{i18n>invoiceListTitle}"
+            />
+            <ToolbarSpacer />
+            <SearchField
+                id="search"
+                width="50%"
+                showSearchButton="false"
+                placeholder="Search by Product or Shipper..."
+            />
+            <ComboBox
+                id="select"
+                items="{allCountries>/}"
+                placeholder="Search by Country..."
+            >
+                <items>
+                    <core:ListItem
+                        text="{allCountries>}"
+                        key="{allCountries>}"
+                    />
+                </items>
+            </ComboBox>
+            <Button
+                text="Cerca"
+                icon="sap-icon://search"
+                press="onFilter"
+            />
+            <Button
+                text="Reset"
+                icon="sap-icon://reset"
+                press="onReset"
+            />
+            <OverflowToolbarButton
+                tooltip="Sort"
+                type="Default"
+                text="Sort"
+                icon="sap-icon://sort"
+                press="onSortA"
+            />
+            <OverflowToolbarButton
+                tooltip="Group"
+                type="Default"
+                text="Group"
+                icon="sap-icon://group-2"
+                press="onGroupA"
+            />
+            <OverflowToolbarButton
+                tooltip="Export"
+                type="Default"
+                text="Export as PDF"
+                icon="sap-icon://pdf-attachment"
+                press="onPDFActionA"
+            />
+        </Toolbar>
+
+        <Table
+            id="invoiceList"
+            width="100%"
+            items="{invoices>/Invoices}"
+            growing="true"
+            alternateRowColors="true"
+        >
+            <columns>
+                <Column
+                    hAlign="End"
+                    minScreenWidth="Small"
+                    demandPopin="true"
+                    width="5em"
+                >
+                    <Text text="{i18n>columnQuantity}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>columnName}" />
+                </Column>
+                <Column
+                    minScreenWidth="Small"
+                    demandPopin="true"
+                >
+                    <Text text="{i18n>columnShippedDate}" />
+                </Column>
+                <Column
+                    minScreenWidth="Tablet"
+                    demandPopin="false"
+                >
+                    <Text text="{i18n>columnShipper}" />
+                </Column>
+                <Column hAlign="End">
+                    <Text text="{i18n>columnPrice}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>columnCity}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>columnFreight}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem
+                    type="Navigation"
+                    press=".onPress"
+                >
+                    <cells>
+                        <ObjectNumber
+                            number="{invoices>Quantity}"
+                            emphasized="false"
+                        />
+                        <ObjectIdentifier title="{invoices>ProductName}" />
+
+                        <Text
+                            text="{
+                                     path: 'invoices>ShippedDate',
+                                     type: 'sap.ca.ui.model.type.Date',
+                                     formatOptions:{
+                                       pattern: 'dd/MM/yyyy'
+                                     }}"/>
+
+                        <Text text="{invoices>ShipperName}" />
+
+                        <ObjectNumber
+                            number="{
+                        parts: ['invoices>ExtendedPrice', 'view>/currency'],
+                        type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+                            unit="{view>/currency}"
+                            state="{= ${invoices>ExtendedPrice} > 50 ? 'Error' : 'Success' }"
+                        />
+
+                        <Text text="{invoices>City}" />
+
+                        <Text text="{invoices>Freight}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <footer>
+			<OverflowToolbar >
+				<ToolbarSpacer/>
+				<Button type="Accept" text="Accept">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow" /></layoutData>
+				</Button>
+				<Button type="Reject" text="Reject">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow" /></layoutData>
+				</Button>
+				<OverflowToolbarButton tooltip="Delete" text="Delete" icon="sap-icon://delete"/>
+				<OverflowToolbarButton tooltip="Edit" text="Edit" icon="sap-icon://edit"/>
+				<OverflowToolbarButton tooltip="Add" text="Add" icon="sap-icon://add"/>
+				<OverflowToolbarButton tooltip="Favorite" text="Favorite" icon="sap-icon://favorite"/>
+				<OverflowToolbarButton tooltip="Flag" text="Flag" icon="sap-icon://flag"/>
+				<OverflowToolbarToggleButton tooltip="Toggle" text="Toggle" icon="sap-icon://touch" press="onTogglePressA"/>
+
+			</OverflowToolbar>
+		</footer>
+    </Page>
+</mvc:View>

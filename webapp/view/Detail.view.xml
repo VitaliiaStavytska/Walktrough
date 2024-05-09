@@ -1,0 +1,292 @@
+<mvc:View
+    controllerName="ui5.walkthrough.controller.Detail"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+   
+>
+    <Page
+        id="details"
+        title="Order N.{details>/OrderID} - Details"
+        showNavButton="true"
+        navButtonPress="onBack"
+        
+    >
+        <ObjectHeader
+            title="{details>/Customer/CompanyName}'s Order"
+            backgroundDesign="Translucent"
+           
+            icon="sap-icon://customer"
+            iconActive="true"
+            iconPress="onOpenCustomerDetails"
+            number="{
+            parts:[{path:'details>/Order_Details/results/0/UnitPrice'},{path:'view>/currency'}],
+            type: 'sap.ui.model.type.Currency',
+            formatOptions: {showMeasure: false}
+        }"
+            numberUnit="{view>/currency}"
+            class="sapUiResponsivePadding--header"
+        >
+        <ObjectAttribute text="{
+            path: 'details>/ShippedDate',
+            type: 'sap.ca.ui.model.type.Date',
+            formatOptions:{
+                pattern: 'dd/MM/yyyy'
+            }
+        }" title="Data Consegna"/>
+        <ObjectAttribute text="{
+            path: 'details>/OrderDate',
+            type: 'sap.ca.ui.model.type.Date',
+            formatOptions:{
+                pattern: 'dd/MM/yyyy'
+            }
+        }" title="Data Ordine"/>
+        <ObjectAttribute text="{
+            path: 'details>/RequiredDate',
+            type: 'sap.ca.ui.model.type.Date',
+            formatOptions:{
+                pattern: 'dd/MM/yyyy'
+            }
+        }" title="Data della Richiesta"/>
+            <statuses>
+                <ObjectStatus
+                    title="status"
+                    icon="sap-icon://product"
+                    text="Delivered"
+                    state="Success"
+                />
+            </statuses>
+        </ObjectHeader>
+ 
+        <IconTabBar
+            id="iconTabBar"
+            headerBackgroundDesign="Solid"
+            select="onTabSelect"
+            selectedKey="{detailView>/selectedTab}"
+        >
+            <items>
+                <IconTabFilter
+                    id="iconTabFilterShipping"
+                    text="Shipping"
+                    icon="sap-icon://shipping-status"
+                    tooltip="{i18n>detailIconTabBarShipping}"
+                    key="shipping"
+                />
+                 <IconTabFilter
+                    id="iconTabFilterCustomer"
+                    text="Customer"
+                    icon="sap-icon://supplier"
+                    tooltip="{i18n>detailIconTabBarCustomer}"
+                    key="customer"
+                />
+                <IconTabFilter
+                    id="iconTabFilterProcessor"
+                    text="Employee"
+                    icon="sap-icon://employee"
+                    tooltip="{i18n>detailIconTabBarProcessor}"
+                    key="processor"
+                />
+                <IconTabFilter
+                    icon="sap-icon://feedback"
+					key="notes"
+					text="Notes">
+					<FeedInput />
+					</IconTabFilter>
+            </items>
+        </IconTabBar>
+ 
+        <f:Card
+            class="sapUiMediumMargin"
+            width="300px"
+            id="ShipperCard"
+        >
+            <f:header>
+                <card:Header title="Shipper" />
+            </f:header>
+            <f:content>
+                <List class="sapUiSmallMarginBottom">
+                    <CustomListItem>
+                        <VBox justifyContent="SpaceBetween">
+                            <VBox
+                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                            >
+                                <Label text="Company name" />
+                                <HBox>
+                                    <core:Icon src="sap-icon://business-card" />
+                                    <Text
+                                        text="{details>/Shipper/CompanyName} ({details>/Shipper/ShipperID})"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </VBox>
+                            <VBox
+                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                            >
+                                <Label text="Phone number" />
+                                <HBox>
+                                    <core:Icon src="sap-icon://call" />
+                                    <Text
+                                        text="{details>/Shipper/Phone}"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </VBox>
+                        </VBox>
+                    </CustomListItem>
+                </List>
+            </f:content>
+        </f:Card>
+ 
+        <f:Card
+            class="sapUiMediumMargin"
+            width="300px"
+            visible="false"
+            id="EmployeeCard"
+        >
+            <f:header>
+                <card:Header title="Employee" />
+            </f:header>
+            <f:content>
+                <List class="sapUiSmallMarginBottom">
+                    <CustomListItem>
+                        <VBox justifyContent="SpaceBetween">
+                            <VBox
+                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                            >
+                                <Label text="Employee Name" />
+                                <HBox>
+                                    <core:Icon src="sap-icon://business-card" />
+                                    <Text
+                                        text="{details>/Employee/FirstName} {details>/Employee/LastName} ({details>/Employee/Title})"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </VBox>
+                            <VBox
+                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                            >
+                                <Label text="Phone number" />
+                                <HBox>
+                                    <core:Icon src="sap-icon://call" />
+                                    <Text
+                                        text="{details>/Employee/HomePhone}"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </VBox>
+                            <VBox
+                                class="sapUiSmallMarginBegin sapUiMediumMarginEnd sapUiSmallMarginTopBottom "
+                            >
+                                <Label text="EmployeeID" />
+                                <HBox>
+                                    <core:Icon src="sap-icon://building" />
+                                    <Text
+                                        text="{details>/Employee/Address}, {details>/Employee/City}, {details>/Employee/Country} ({details>/Employee/PostalCode})"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </VBox>
+                        </VBox>
+                    </CustomListItem>
+                </List>
+            </f:content>
+        </f:Card>
+ 
+            <f:Card
+            class="sapUiMediumMargin"
+            width="300px"
+            visible="false"
+            id="CustomerCard"
+        >
+            <f:header>
+                <card:Header title="Customer" />
+            </f:header>
+            <f:content>
+                <List class="sapUiSmallMarginBottom">
+                    <CustomListItem>
+                        <VBox justifyContent="SpaceBetween">
+                            <VBox
+                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                            >
+                                <Label text="Customer Name" />
+                                <HBox>
+                                    <core:Icon src="sap-icon://business-card" />
+                                    <Text
+                                        text="{details>/Customer/CompanyName} {details>/Customer/ContactName} ({details>/Customer/ContactTitle})"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </VBox>
+                            <VBox
+                                class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+                            >
+                                <Label text="Phone number" />
+                                <HBox>
+                                    <core:Icon src="sap-icon://call" />
+                                    <Text
+                                        text="{details>/Customer/Phone}"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </VBox>
+                            <VBox
+                                class="sapUiSmallMarginBegin sapUiMediumMarginEnd sapUiSmallMarginTopBottom "
+                            >
+                                <Label text="Customer Address" />
+                                <HBox>
+                                    <core:Icon src="sap-icon://building" />
+                                    <Text
+                                        text="{details>/Customer/Address}, {details>/Customer/City}, {details>/Customer/Country} ({details>/Customer/PostalCode})"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </VBox>
+                        </VBox>
+                    </CustomListItem>
+                </List>
+            </f:content>
+        </f:Card>
+   
+ 
+        <Table
+            items="{products>/}"
+            headerText="Products"
+        >
+            <items>
+                <ColumnListItem
+                    type="Navigation"
+                    press=".onPress"
+                >
+                    <cells>
+                        <Text text="{products>ProductName}" />
+                        <Text
+                            text="{parts:[{path:'products>UnitPrice'},{path:'view>/currency'}],type: 'sap.ui.model.type.Currency',formatOptions: {showMeasure: true}}"
+                        />
+                        <Text text="{products>ProductID}" />
+                        <Text text="{products>Supplier/CompanyName}" />
+                        <Text text="{products>UnitsInStock}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+            <columns>
+                <Column>
+                    <Text text="Product Name" />
+                </Column>
+                <Column>
+                    <Text text="Unit Price" />
+                </Column>
+                <Column>
+                    <Text text="Product ID" />
+                </Column>
+                <Column>
+                    <Text text="Supplier" />
+                </Column>
+                <Column>
+                    <Text text="Available in stock" />
+                </Column>
+            </columns>
+        </Table>
+    </Page>
+</mvc:View>

@@ -1,0 +1,32 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog icon="sap-icon://customer" title="{details>/Customer/CompanyName}'s Details"
+        state="Information">
+        <VBox class="sapUiSmallMargin">
+            <f:SimpleForm
+                editable="false"
+                layout="ResponsiveGridLayout"
+                adjustLabelSpan="false"
+                singleContainerFullSize="true"
+                labelSpanS="4"
+                emptySpanS="0"
+                >
+                <f:content>
+                    <Label text="Name" />
+                    <Text text="{details>/Customer/ContactName} ({details>/Customer/ContactTitle})" />
+                    <Label text="Address" />
+                    <Text text="{details>/Customer/Address}, {details>/Customer/City}, {details>/Customer/Country} ({details>/Customer/PostalCode})" />
+                    <Label text="Phone No." />
+                    <Text text="{details>/Customer/Phone}" />
+                </f:content>
+            </f:SimpleForm>
+        </VBox>
+
+        <Toolbar style="Clear">
+            <ToolbarSpacer />
+            <Button text="{i18n>closeCustomerDetails}" press="onCloseCustomerDetails" />
+        </Toolbar>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,252 @@
+<mvc:View
+    xmlns:unified="sap.ui.unified"
+    xmlns:uxap="sap.uxap"
+    controllerName="ui5.walkthrough.controller.Product"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:smartList="sap.ui.comp.smartlist"
+    height="100%"
+>
+    <core:InvisibleText
+        id="text1"
+        text="Label text"
+    />
+    <Page
+        id="product"
+        title="Product N.{product>/ProductID} - Details"
+        titleLevel="H1"
+        titleAlignment="Center"
+        showNavButton="true"
+        navButtonPress="onBack"
+        navButtonTooltip=""
+        enableScrolling="true"
+        class="sapUiContentPadding"
+    >
+    <ObjectHeader
+            title="Click on me"
+            titleActive="true"
+            titlePress="onOpenProductDetails"
+            icon="sap-icon://product"
+        />
+        <content>
+            <VBox>
+                <MessageStrip
+                    text="Use this slider to shrink the toolbars and observe their behavior. Note: the icon buttons display text only when in the overflow area."
+                    type="Information"
+                    showIcon="true"
+                />
+                
+                <Slider
+                    value="100"
+                    liveChange="onSliderMoved"
+                />
+            </VBox>
+            <HBox >
+              <Button
+                    text="Indication"
+                    press="handleMessageToastPress"
+                />
+                <Button press="onShipper" text="Shipper Page" />
+                <Button press="onDetail" text="Detail Page" />
+              <Button press="onHomepage" text="Home Page" />
+                
+                </HBox>
+        </content>
+        
+
+        <OverflowToolbar id="otbSubheader">
+            <ToolbarSpacer />
+            <SearchField
+                ariaLabelledBy="text1"
+                id="maxPrice"
+                liveChange="onFilter"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        maxWidth="300px"
+                        shrinkable="true"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </SearchField>
+            <Button
+                text="Reset"
+                type="Transparent"
+                press="onReset"
+            />
+            <OverflowToolbarButton
+                tooltip="Sort"
+                type="Transparent"
+                text="Sort"
+                icon="sap-icon://sort"
+                press="onSort"
+            />
+            <OverflowToolbarButton
+                tooltip="Group"
+                type="Transparent"
+                text="Group"
+                icon="sap-icon://group-2"
+                press="onGroup"
+            />
+            <OverflowToolbarButton
+                tooltip="Export"
+                type="Transparent"
+                text="Export as PDF"
+                icon="sap-icon://pdf-attachment"
+                press="onPDFAction"
+            />
+        </OverflowToolbar>
+        <t:Table
+            id="idProductsTable"
+            class="sapUiResponsiveMargin"
+            width="auto"
+            rows="{product>/}"
+            alternateRowColors="true"
+            visibleRowCount="1"
+        >
+            <t:columns>
+                <t:Column>
+                    <Label text="SupplierID" />
+                    <t:template>
+                        <Text text="{product>/SupplierID}" />
+                    </t:template>
+                </t:Column>
+
+                <t:Column>
+                    <Label text="CategoryID" />
+                    <t:template>
+                        <Text text="{product>/CategoryID}" />
+                    </t:template>
+                </t:Column>
+
+                <t:Column>
+                    <Label text="QuantityPerUnit" />
+                    <t:template>
+                        <Text text="{product>/QuantityPerUnit}" />
+                    </t:template>
+                </t:Column>
+
+                <t:Column>
+                    <Label text="UnitPrice" />
+                    <t:template>
+                        <Text text="{product>/UnitPrice}" />
+                    </t:template>
+                </t:Column>
+
+                <t:Column>
+                    <Label text="UnitsOnOrder" />
+                    <t:template>
+                        <Text text="{product>/UnitsOnOrder}" />
+                    </t:template>
+                </t:Column>
+
+                <t:Column>
+                    <Label text="UnitsInStock" />
+                    <t:template>
+                        <Text text="{product>/UnitsInStock}" />
+                    </t:template>
+                </t:Column>
+            </t:columns>
+        </t:Table>
+
+        <smartList:SmartList
+            id="ProductID"
+            listType="Tree"
+            enableAutoBinding="true"
+            showRowCount="true"
+            header="Product's Details"
+            backgroundDesign="Solid"
+            alignItems="Stretch"
+            entitySet="LineItemsSet"
+            showFullScreenButton="true"
+            listBindingPath="{products>/}"
+        >
+            <smartList:listItemTemplate>
+                <StandardTreeItem
+                    title="{products>Product/ProductName}'Description"
+                    type="Navigation"
+                    press=".onPress.Products"
+                    bindingContexts="{products>/}"
+                />
+            </smartList:listItemTemplate>
+            <OverflowToolbar design="Info">
+                <Select
+                    selectedKey="None"
+                    change="handleSelectChange"
+                >
+                    <items>
+                        <core:Item
+                            key="{products>Products/ReorderLevel}"
+                            text="Reorder Level"
+                        />
+                        <core:Item
+                            key="{products>Products/type}"
+                            text="Type"
+                        />
+                        <core:Item
+                            key="{products>Products/Supplier}"
+                            text="Supplier"
+                        />
+                    </items>
+                </Select>
+            </OverflowToolbar>
+        </smartList:SmartList>
+        <footer>
+            <OverflowToolbar id="otbFooter">
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="Accept"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </Button>
+                <Button
+                    type="Reject"
+                    text="Reject"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </Button>
+                <OverflowToolbarButton
+                    tooltip="Delete"
+                    text="Delete"
+                    icon="sap-icon://delete"
+                />
+                <OverflowToolbarButton
+                    tooltip="Edit"
+                    text="Edit"
+                    icon="sap-icon://edit"
+                />
+                <OverflowToolbarButton
+                    tooltip="Add"
+                    text="Add"
+                    icon="sap-icon://add"
+                />
+                <OverflowToolbarButton
+                    tooltip="Favorite"
+                    text="Favorite"
+                    icon="sap-icon://favorite"
+                />
+                <OverflowToolbarButton
+                    tooltip="Flag"
+                    text="Flag"
+                    icon="sap-icon://flag"
+                />
+                <OverflowToolbarToggleButton
+                    tooltip="Toggle"
+                    text="Toggle"
+                    icon="sap-icon://touch"
+                    press="onTogglePress"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>
